@@ -34,6 +34,9 @@ let server = http.createServer((req, res) => {
             } else {
                 res.write(JSON.stringify(users))
             }
+            if (req.method === 'DELETE') {
+                users.filter(u => u.id !== 89)
+            }
             break
         case '/lssons':
             res.write('tasks')
