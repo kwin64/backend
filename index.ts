@@ -14,13 +14,26 @@ let cors = (req, res) => {
     return false
 }
 
+let users = [
+    {"id": 1, "name": "Sasha"},
+    {"id": 3, "name": "Dks"},
+    {"id": 2, "name": "dsfa"},
+    {"id": 4, "name": "xlcma"},
+    {"id": 67, "name": "ldfksm"}
+]
+
 let server = http.createServer((req, res) => {
 
     if (cors(req, res)) return
 
     switch (req.url) {
         case '/users':
-            res.write(`[{"id":1, "name": "Sasha"},{"id":2, "name": "Artem"}]`)
+            if (req.method === "POST") {
+                users.push({"id": 89, "name": "mnmvhjvfhjhj"})
+                res.write(JSON.stringify({success: true}))
+            } else {
+                res.write(JSON.stringify(users))
+            }
             break
         case '/lssons':
             res.write('tasks')
