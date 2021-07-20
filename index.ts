@@ -1,14 +1,28 @@
 let http = require('http')
 
+let cors = (req, res) => {
+    // Set CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Request-Method', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+    res.setHeader('Access-Control-Allow-Headers', '*');
+    if (req.method === 'OPTIONS') {
+        res.writeHead(200)
+        res.end()
+        return true
+    }
+    return false
+}
+
 let server = http.createServer((req, res) => {
-    console.log('some request')
-    let message = 'dfdf'
-    
+
+    if (cors(req, res)) return
+
     switch (req.url) {
-        case '/':
-            res.write('HOME')
+        case '/users':
+            res.write(`[{"id":1, "name": "Sasha"},{"id":2, "name": "Artem"}]`)
             break
-        case '/tasks':
+        case '/lssons':
             res.write('tasks')
             break
         default:
@@ -19,5 +33,3 @@ let server = http.createServer((req, res) => {
 })
 
 server.listen(7542)
-
-console.log(http)
