@@ -1,10 +1,12 @@
 let http = require('http')
+let {getUsers, deleteUser, addUser} = require('./data.ts')
+//let {getUsers, deleteUser, addUser} = require('./data')
 
 let cors = (req, res) => {
     // Set CORS headers
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Request-Method', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
+    res.setHeader('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', '*');
     if (req.method === 'OPTIONS') {
         res.writeHead(200)
@@ -14,14 +16,6 @@ let cors = (req, res) => {
     return false
 }
 
-let users = [
-    {"id": 1, "name": "Sasha"},
-    {"id": 3, "name": "Dks"},
-    {"id": 2, "name": "dsfa"},
-    {"id": 4, "name": "xlcma"},
-    {"id": 67, "name": "ldfksm"}
-]
-
 let server = http.createServer((req, res) => {
 
     if (cors(req, res)) return
@@ -29,16 +23,16 @@ let server = http.createServer((req, res) => {
     switch (req.url) {
         case '/users':
             if (req.method === "POST") {
-                users.push({"id": 89, "name": "mnmvhjvfhjhj"})
+                addUser('new')
                 res.write(JSON.stringify({success: true}))
             } else {
-                res.write(JSON.stringify(users))
+                res.write(JSON.stringify(getUsers()))
             }
             if (req.method === 'DELETE') {
-                users.filter(u => u.id !== 89)
+                deleteUser(3)
             }
             break
-        case '/lssons':
+        case '/lessons':
             res.write('tasks')
             break
         default:
