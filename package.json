@@ -1,0 +1,8 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/kwin64/backend.git",
+  "author": "kwin64 <kwin11bvb@yandex.by>",
+  "license": "MIT"
+}
