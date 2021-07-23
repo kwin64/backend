@@ -1,21 +1,33 @@
-let users = [
-    { "id": 1, "name": "Sasha" },
-    { "id": 3, "name": "Dks" },
-    { "id": 2, "name": "dsfa" },
-    { "id": 4, "name": "xlcma" },
-    { "id": 67, "name": "ldfksm" }
-]
+const fs = require("fs");
 
 let getUsers = () => {
-    return users
-}
-let addUser = (name) => {
-    users.push({ "id": 89, "name": name })
-}
-let deleteUser = (id) => {
-    users.filter(u => u.name !== id)
-}
+  return new Promise((resolve, reject) => {
+    fs.readFile("users.json", function (err, buf) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(JSON.parse(buf.toString()));
+      }
+    });
+  });
+};
 
-module.exports.getUsers = getUsers
-module.exports.addUser = addUser
-module.exports.deleteUser = deleteUser
+let addUser = async (name) => {
+  let users = await getUsers();
+  users.push({ id: 89, name: name });
+
+  return new Promise((resolve, reject) => {
+    fs.writeFile("users.json", JSON.stringify(users), (err) => {
+      if (err) reject(err);
+      resolve();
+    });
+  });
+};
+
+let deleteUser = (id) => {
+  users.filter((u) => u.name !== id);
+};
+
+module.exports.getUsers = getUsers;
+module.exports.addUser = addUser;
+module.exports.deleteUser = deleteUser;
