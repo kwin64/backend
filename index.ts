@@ -1,6 +1,5 @@
 let http = require('http')
-let {getUsers, deleteUser, addUser} = require('./data.ts')
-//let {getUsers, deleteUser, addUser} = require('./data')
+let {usersController} = require('./usersController.ts')
 
 let cors = (req, res) => {
     // Set CORS headers
@@ -22,15 +21,7 @@ let server = http.createServer((req, res) => {
 
     switch (req.url) {
         case '/users':
-            if (req.method === "POST") {
-                addUser('new')
-                res.write(JSON.stringify({success: true}))
-            } else {
-                res.write(JSON.stringify(getUsers()))
-            }
-            if (req.method === 'DELETE') {
-                deleteUser(3)
-            }
+            usersController(req,res)
             break
         case '/lessons':
             res.write('tasks')
