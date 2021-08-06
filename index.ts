@@ -1,10 +1,9 @@
-
-var http = require("http");
-var usersController = require("./usersController.js").usersController;
+const http = require("http");
+const usersController = require("./usersController.ts").usersController;
 process.on("unhandledRejection", function (reason, p) {
     console.log(reason, p);
 });
-var cors = function (req:any, res:any) {
+const cors = function (req: any, res: any) {
     // Set CORS headers
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Access-Control-Request-Method", "*");
@@ -17,7 +16,7 @@ var cors = function (req:any, res:any) {
     }
     return false;
 };
-var server = http.createServer(function (req:any, res:any) {
+const server = http.createServer(function (req: any, res: any) {
     if (cors(req, res))
         return;
     switch (req.url) {
